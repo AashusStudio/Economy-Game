@@ -32,5 +32,5 @@ As a 17-year-old developer from Pune aiming for an **AI/ML Engineer** career, I 
 
 ### 📦 Installation
 ```bash
-git clone [https://github.com/AashusStudio/Economy-Game.git](https://github.com/AashusStudio/Economy-Game.git)
-cd Economy-Game
+Step 1. git clone https://github.com/AashusStudio/Economy-Game.git
+Step 2. cd Economy-Game
