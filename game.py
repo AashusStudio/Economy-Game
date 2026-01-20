@@ -8,12 +8,20 @@ base_path = os.path.dirname(os.path.abspath(__file__))
 def get_path(filename):
     return os.path.join(base_path, filename)
 
-# Check if files exist
-for file in ["cashbal.txt", "bankbal.txt"]:
+# Check/Create necessary files
+files_to_check = {
+    "cashbal.txt": "0",
+    "bankbal.txt": "0",
+    "last_crime.txt": "0",
+    "last_work.txt": "0",
+    "last_daily.txt": "0"
+}
+
+for file, default in files_to_check.items():
     path = get_path(file)
     if not os.path.exists(path):
         with open(path, "w") as f:
-            f.write("0")
+            f.write(default)
 
 # --- Initial Load ---
 with open(get_path("cashbal.txt"), "r") as f:
@@ -39,10 +47,38 @@ class Game:
         with open(get_path("bankbal.txt"), "w") as f:
             f.write(str(self.bankbal))
 
+    def check_cooldown(self, filename, cooldown_seconds):
+        """Returns (is_ready, remaining_time_string)"""
+        with open(get_path(filename), "r") as f:
+            last_time = float(f.read())
+        
+        current_time = time.time()
+        elapsed = current_time - last_time
+        
+        if elapsed < cooldown_seconds:
+            remaining = cooldown_seconds - elapsed
+            if remaining > 3600:
+                return False, f"{int(remaining//3600)}h {int((remaining%3600)//60)}m remaining"
+            elif remaining > 60:
+                return False, f"{int(remaining//60)}m {int(remaining%60)}s remaining"
+            else:
+                return False, f"{int(remaining)}s remaining"
+        return True, ""
+
+    def update_cooldown(self, filename):
+        with open(get_path(filename), "w") as f:
+            f.write(str(time.time()))
+
     def daily(self):
+        ready, msg = self.check_cooldown("last_daily.txt", 86400) # 1 day
+        if not ready:
+            print(f"\n⏳ You already claimed your daily reward! Come back in {msg}.")
+            return
+
         daily_r = random.randint(1000, 3000)
         self.cashbal += daily_r
         self.save_data()
+        self.update_cooldown("last_daily.txt")
         print(f"\n✨ ------------------------------ ✨\n🎁 Daily reward received: ${daily_r}\n✨ ------------------------------ ✨")
 
     def balance(self):
@@ -51,6 +87,11 @@ class Game:
         print(f"💰 ---------------------------------------- 💰")
     
     def crime(self):
+        ready, msg = self.check_cooldown("last_crime.txt", 60) # 1 min
+        if not ready:
+            print(f"\n⏳ The police are watching! Wait {msg} before your next crime.")
+            return
+
         crime_s = random.randint(1, 100)
         if crime_s <= 50:
             fine = random.randint(500, 2000)
@@ -59,7 +100,6 @@ class Game:
             print(f"Caught while {caught_reason} \n💸 Paid a fine of: ${fine}")
             print(f"🚨 ---------------------------------------- 🚨")
             self.cashbal -= fine
-            self.save_data()
         else:
             earned = random.randint(1000, 5000)
             crime_s_r = random.choice(pass_reason)
@@ -67,9 +107,16 @@ class Game:
             print(f"{crime_s_r} \n➕ Earned: ${earned}")
             print(f"🧤 ---------------------------------------- 🧤")
             self.cashbal += earned
-            self.save_data()
+        
+        self.save_data()
+        self.update_cooldown("last_crime.txt")
 
     def work(self):
+        ready, msg = self.check_cooldown("last_work.txt", 60) # 1 min
+        if not ready:
+            print(f"\n⏳ You are exhausted! Rest for {msg} before working again.")
+            return
+
         work_s = random.choice(work_statements)
         earned_w = random.randint(500, 2000)
         print(f"\n🔨 ---------------------------------------- 🔨")
@@ -77,6 +124,7 @@ class Game:
         print(f"🔨 ---------------------------------------- 🔨")
         self.cashbal += earned_w
         self.save_data()
+        self.update_cooldown("last_work.txt")
 
     def deposit(self, amount):
         if amount <= self.cashbal:
