@@ -93,13 +93,13 @@ class Game:
         self.cashbal += daily_r
         self.save_data()
         self.update_cooldown("last_daily.txt")
-        print(f"\n✨ ------------------------------ ✨\n🎁 Daily reward received: ${daily_r}\n✨ ------------------------------ ✨")
+        print(f"\n✨ ---------------------- ✨\n🎁 Daily reward received: ${daily_r}\n✨ ---------------------- ✨")
 
     def balance(self):
         """Displays current Cash and Bank holdings."""
-        print(f"\n💰 ---------------------------------------- 💰")
+        print(f"\n💰 -------------------------------- 💰")
         print(f"🏦 Bank: ${self.bankbal} | 💵 Cash: ${self.cashbal}")
-        print(f"💰 ---------------------------------------- 💰")
+        print(f"💰 -------------------------------- 💰")
     
     def crime(self):
         """High risk, high reward action. 50% chance of failing and losing money."""
@@ -112,16 +112,16 @@ class Game:
         if crime_s <= 50: # 50% chance of failure
             fine = random.randint(500, 2000)
             caught_reason = random.choice(caught)
-            print(f"\n🚨 ---------------------------------------- 🚨")
+            print(f"\n🚨 -------------------------------- 🚨")
             print(f"Caught while {caught_reason} \n💸 Paid a fine of: ${fine}")
-            print(f"🚨 ---------------------------------------- 🚨")
+            print(f"🚨 -------------------------------- 🚨")
             self.cashbal -= fine
         else: # Success
             earned = random.randint(1000, 5000)
             crime_s_r = random.choice(pass_reason)
-            print(f"\n🧤 ---------------------------------------- 🧤")
+            print(f"\n🧤 -------------------------------- 🧤")
             print(f"{crime_s_r} \n➕ Earned: ${earned}")
-            print(f"🧤 ---------------------------------------- 🧤")
+            print(f"🧤 -------------------------------- 🧤")
             self.cashbal += earned
         
         self.save_data()
@@ -136,9 +136,9 @@ class Game:
 
         work_s = random.choice(work_statements)
         earned_w = random.randint(500, 2000)
-        print(f"\n🔨 ---------------------------------------- 🔨")
+        print(f"\n🔨 -------------------------------- 🔨")
         print(f"{work_s} \n💵 Earned: ${earned_w}")
-        print(f"🔨 ---------------------------------------- 🔨")
+        print(f"🔨 -------------------------------- 🔨")
         self.cashbal += earned_w
         self.save_data()
         self.update_cooldown("last_work.txt")
