@@ -1,36 +1,42 @@
 <div align="center">
 
-# 🎮 Economic Simulator
-### *My First Python Journey* 🚀
+# 🎮 Economy Simulator
+
+A simple terminal-based economy game made with Python.
 
 [![Python Version](https://img.shields.io/badge/python-3.13-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/AashusStudio/Economy-Game/graphs/commit-activity)
 
-**A terminal-based economy engine built to master Python fundamentals.**
-
-
-
----
 </div>
 
-## 🎯 The Mission
-As a 17-year-old developer from Pune aiming for an **AI/ML Engineer** career, I built this as my first major project. The goal was to move beyond "Hello World" and tackle real-world programming challenges like data persistence and time-based logic.
+---
 
-## ✨ Features
-| Feature | Description |
-| :--- | :--- |
-| **💰 Banking** | Secure your cash in the bank to avoid heavy fines. |
-| **⏳ Cooldowns** | Real-time 1m/24h waiting periods using the `time` module. |
-| **🧤 Risk System** | 50/50 probability engine for Crime vs. Reward. |
-| **📁 Smart Saves** | Automatic `.txt` data handling with `os` pathing. |
-| **🕹️ Emoji UI** | Interactive and colorful terminal experience. |
+## About
+
+This is my first Python project. I built it to practice what I learned while exploring Python beyond basic programs.
+
+The project started as a small idea but slowly grew as I added more features and fixed bugs along the way. It helped me understand file handling, functions, loops, conditions, and how to organize a larger program.
+
+It's not perfect, but I'm happy with how it turned out.
 
 ---
 
-## 🚀 Getting Started
+## Features
 
-### 📦 Installation
+- 💰 Bank system to store your money.
+- 🎲 Gamble and crime commands with random outcomes.
+- ⏱️ Cooldown system using Python's `time` module.
+- 📁 Data is saved automatically, so progress isn't lost.
+- 🏆 Simple leaderboard.
+- 😀 Clean terminal interface with emojis.
+
+---
+
+## Getting Started
+
+### Clone the repository
+
 ```bash
-Step 1. git clone https://github.com/AashusStudio/Economy-Game.git
-Step 2. cd Economy-Game
+git clone https://github.com/AashusStudio/Economy-Game.git
+cd Economy-Game
+```
